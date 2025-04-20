@@ -6,20 +6,20 @@ EXPOSE 8090
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/SalesApi/SalesApi.csproj", "src/SalesApi/"]
-COPY ["src/SalesApi.Application/SalesApi.Application.csproj", "src/SalesApi.Application/"]
-COPY ["src/SalesApi.Domain/SalesApi.Domain.csproj", "src/SalesApi.Domain/"]
-COPY ["src/SalesApi.Infrastructure/SalesApi.Infrastructure.csproj", "src/SalesApi.Infrastructure/"]
-RUN dotnet restore "src/SalesApi/SalesApi.csproj"
+COPY ["src/Sales.Api/Sales.Api.csproj", "src/Sales.Api/"]
+COPY ["src/Sales.Application/Sales.Application.csproj", "src/Sales.Application/"]
+COPY ["src/Sales.Domain/Sales.Domain.csproj", "src/Sales.Domain/"]
+COPY ["src/Sales.Infrastructure/Sales.Infrastructure.csproj", "src/Sales.Infrastructure/"]
+RUN dotnet restore "src/Sales.Api/Sales.Api.csproj"
 COPY . .
-WORKDIR "/src/src/SalesApi"
-RUN dotnet build "./SalesApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/Sales.Api"
+RUN dotnet build "./Sales.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./SalesApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Sales.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SalesApi.dll"]
+ENTRYPOINT ["dotnet", "Sales.Api.dll"]

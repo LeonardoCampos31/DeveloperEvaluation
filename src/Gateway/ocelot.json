@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "sales-api",
-          "Port": 80
+          "Port": 8090
         }
       ],
       "UpstreamPathTemplate": "/products",
@@ -18,7 +18,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "sales-api",
-          "Port": 80
+          "Port": 8090
         }
       ],
       "UpstreamPathTemplate": "/products/{id}",
@@ -31,7 +31,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "sales-api",
-          "Port": 80
+          "Port": 8090
         }
       ],
       "UpstreamPathTemplate": "/sales",
@@ -43,7 +43,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "sales-api",
-          "Port": 80
+          "Port": 8090
         }
       ],
       "UpstreamPathTemplate": "/sales/{id}",

@@ -11,6 +11,7 @@ RUN dotnet restore "src/Gateway/Gateway.csproj"
 COPY . .
 WORKDIR "/src/src/Gateway"
 RUN dotnet build "./Gateway.csproj" -c $BUILD_CONFIGURATION -o /app/build
+COPY src/Gateway/ocelot.json .
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

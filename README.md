@@ -122,6 +122,72 @@ The following endpoints **must** be implemented with these names and paths (rela
     * Returns: `200 OK` with `ApiResponse<object>` indicating success (e.g., `{"status": "success", "message": "Sell Cancelled"}`).
     * Expected Errors: `404 Not Found` if the sale doesn't exist.
 
+## How to Run (Docker)
+
+Follow these instructions to build the Docker images and run the entire application stack (API, Gateway, Database) using Docker Compose.
+
+**Prerequisites:**
+
+* Docker Desktop (Windows/macOS) or Docker Engine + Docker Compose (Linux) installed and running.
+
+**Steps:**
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone <your-repository-url>
+    cd <repository-folder>
+    ```
+
+2.  **Create External Docker Network:**
+    The application and its test environment require a specific external Docker network. Create it by running the following command in your terminal (you only need to do this once):
+    ```bash
+    docker network create evaluation-network
+    ```
+    *(Your `docker-compose.yml` file is configured to use this network.)*
+
+3.  **Review Configuration (Optional Check):**
+    * Open the `docker-compose.yml` file.
+    * Verify the `services` section:
+        * `postgres`: Configured with user/password `postgres` and database `salesdb`. Host port `5432` is mapped to container port `5432`.
+        * `sales-api`: Builds from `src/Sales.Api/Dockerfile`. Container name is `sales-api`. Host port `8090` is mapped to container port `8090`. Ensure the connection string under `environment` correctly points to the database service: `Host=postgres;...`.
+        * `gateway`: Builds from `src/Gateway/Dockerfile`. Container name is `ocelot-gateway`. Host port `7777` is mapped to container port `7777`.
+    * Verify that all services are connected to the external `evaluation-network`.
+
+4.  **Build and Run Containers:**
+    Navigate to the root directory of the project (where the `docker-compose.yml` file is located) in your terminal and run:
+    ```bash
+    docker-compose up --build -d
+    ```
+    * `--build`: Forces Docker Compose to build the images based on the Dockerfiles (essential if you made code changes).
+    * `-d`: Runs the containers in detached mode (in the background).
+
+5.  **Wait for Services to Start:**
+    Allow a minute or two for all containers (especially the PostgreSQL database and the Sales API) to start completely. The first time you run the `sales-api`, it might take slightly longer as Entity Framework Core migrations may need to be applied to the database. You can check the status and logs:
+    * Check running containers: `docker ps` (Ensure `postgres`, `sales-api`, `ocelot-gateway` are `Up`).
+    * Check API logs for startup confirmation (look for "Now listening on..." and potential migration logs): `docker logs sales-api`
+    * Check Database logs: `docker logs postgres`
+
+6.  **Accessing the Application:**
+    Once the containers are running, the application is accessible through the Ocelot API Gateway:
+    * **API Base URL:** `http://localhost:7777`
+    * **Swagger UI (API Docs):** `http://localhost:7777/swagger` (Note: This assumes Ocelot routes `/swagger` or the Gateway project itself serves it. If this specific path doesn't work, the individual API might expose Swagger on its direct port `http://localhost:8090/swagger` if needed for debugging).
+    * **Example Endpoint:** `GET http://localhost:7777/products`
+
+7.  **Running Tests:**
+    See the "Running Tests (Docker)" section below for instructions on how to execute the automated tests against the running Docker environment.
+
+8.  **Stopping Containers:**
+    To stop and remove the containers defined in the `docker-compose.yml` file
+
+## How to Use:
+
+**Steps:**
+
+1. Open Postman.
+2. Click on "Import".
+3. Select the file option.
+4. Import the file (sales\_postman\_collection.json) located in the project root.
+
 **Standard Success Response Format:**
 
 ```json

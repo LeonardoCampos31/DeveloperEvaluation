@@ -2,24 +2,36 @@ version: "3.3"
 
 services:
   gateway:
-    container_name: ocelot-gateway
+    image: ocelot-gateway
     build:
-      context: ./src/Gateway
+      context: .
+      dockerfile: src/Gateway/Dockerfile
+    container_name: ocelot-gateway
     ports:
-      - "7777:80"
+      - "7777:7777"
+    environment:
+      - ASPNETCORE_URLS=http://+:7777
+    depends_on:
+      - sales-api
     networks:
       - evaluation-network
 
-  api:
-    container_name: sales-api
+  sales-api:
+    image: sales-api
     build:
-      context: ./src/SalesApi
-    ports:
-      - "8081:80"
+      context: .
+      dockerfile: src/Sales.Api/Dockerfile
+    container_name: sales-api
     depends_on:
       - postgres
+    ports:
+      - "8090:8090" # Mapeamento Host:Container
+    environment:
+      - ASPNETCORE_URLS=http://+:8090
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=salesdb;Username=postgres;Password=postgres
     networks:
       - evaluation-network
+    tty: true
 
   postgres:
     image: postgres:latest
