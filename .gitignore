@@ -1,0 +1,149 @@
+# Gitignore file for a .NET project
+
+# Basic Cache Results
+*.nuget.props
+*.nuget.targets
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn][Dd][Ii][Rr]/_rels/
+[Ww][Ii][Nn][Dd][Ii][Rr]/package/
+[Ww][Ii][Nn][Dd][Ii][Rr]/build/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / Rider / VS Code specific files
+.vs/
+.vscode/ # Exclui arquivos de configuração do VS Code, exceto os recomendados
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode.launch.json
+!.vscode/extensions.json
+*.code-workspace
+.idea/
+
+# Rider specific files
+*.idea.solution.*.iml
+*.idea.workspace.*.xml
+*.idea.*.iml
+*.idea.*.jws_project_workspace
+*.idea.reSharper.*.user
+*.idea.shelf/
+*.idea.tasks/
+
+# Build files
+project.lock.json
+project.assets.json
+msbuild.log
+msbuild.err
+msbuild.wrn
+_UpgradeReport_Files/
+
+# Roslyn files
+*.roslynuitest.loc
+
+# Cache files
+*.nuget.cache
+
+# Fakes
+Generated\*
+
+# StyleCop files
+StyleCopReport.xml
+*.stylecop.*.user
+
+# Output files
+*.out
+
+# OS generated files
+# Windows
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+# Linux
+*~
+
+# Parameter files
+*.Publish.xml
+*.pubxml
+
+# NuGet Packages
+# Generally avoid committing packages folder. Use package restore.
+*.nupkg
+# NuGet v3's project-local package cache
+packages/
+# If you are using Paket:
+.paket/paket.exe
+paket-files/
+
+# Dotsettings files
+*.DotSettings.user
+
+# Code Analysis files
+*.ruleset.user
+
+# Migration files (optional, depends on strategy - usually committed)
+# Uncomment if you don't want to commit specific migration files
+# Migrations/*.Designer.cs
+# Migrations/*.resx
+
+# EF Core Power Tools config
+efpt.*.config.json
+
+# Test results and coverage reports
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+*.trx
+*.coverlet.json
+*.xml
+*.codecoverage*
+coverage.*.json
+coverage.*.xml
+*.opencover.xml
+
+# Environment files
+# Often contains secrets, consider if they should be committed
+# .env
+# appsettings.Development.json # Uncomment if you want to ignore dev settings
+
+# User Secrets
+secrets.json
+
+# Docker
+*.dockerignore.log
+docker-compose.override.yml # Often used for local overrides
+
+# ReSharper files
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# BenchmarkDotNet results
+BenchmarkDotNet.Artifacts/
+
+# Bundle/Publish artifacts
+publish/
+dist/

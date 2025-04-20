@@ -1,0 +1,38 @@
+version: "3.3"
+
+services:
+  gateway:
+    container_name: ocelot-gateway
+    build:
+      context: ./src/Gateway
+    ports:
+      - "7777:80"
+    networks:
+      - evaluation-network
+
+  api:
+    container_name: sales-api
+    build:
+      context: ./src/SalesApi
+    ports:
+      - "8081:80"
+    depends_on:
+      - postgres
+    networks:
+      - evaluation-network
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: salesdb
+    ports:
+      - "5432:5432"
+    networks:
+      - evaluation-network
+
+networks:
+  evaluation-network:
+    external: true
